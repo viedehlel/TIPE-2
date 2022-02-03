@@ -1,0 +1,54 @@
+import math as ma
+
+def RessortBode(x,vx,u,vu,dt,durée,A0,w0,w1,w,etha,alpha):
+    
+
+    X = [x] #Liste des positions
+    VX = [vx] #Liste des vitesses
+    U = [u] #Liste des positions
+    VU = [vu] #Liste des vitesses
+    T = [0]  #Liste des temps
+    #Em = [(1/2)*(m*v0**2 + k*(x0-l0)**2)]
+    t=0
+    
+    while t<=durée:
+        x = x + vx * dt
+        u = u + vu * dt
+        
+        ax = 2*alpha*etha*w1*vu + w1**2*alpha*u-w0**2*x+A0*ma.cos(w*t)
+        au = -ax - 2*etha*w1*vu-w1**2*u
+        
+        vx = vx + ax*dt
+        vu = vu + au*dt
+        
+        t+=dt
+        X.append(x)
+        VX.append(vx)
+        U.append(u)
+        VU.append(vu)
+        T.append(t)
+        #Em.append((1/2)*(m*v**2 + k*(x-l0)**2))
+    
+    return [max(X),max(U)]
+    
+def BodeOmega(x,vx,u,vu,dt,durée,A0,w0,w1,etha,alpha,wdebut,wfin,pas):
+    AmplX = []
+    AmplU = []
+    Omega = []
+    w = wdebut
+    while w<=wfin:
+        [a,b] = RessortBode(x,vx,u,vu,dt,durée,A0,w0,w1,w,etha,alpha)
+        AmplX.append(a)
+        AmplU.append(b)
+        Omega.append(w)
+        w+=pas
+        
+    # plt.plot(Omega,AmplX,label = "x")
+    # .plot(Omega,AmplU,label = "u")
+    # plt.legend()
+    # plt.show()
+    
+    for k in range(len(Omega)):
+        print(Omega[k],AmplX[k],AmplU[k])
+    
+    
