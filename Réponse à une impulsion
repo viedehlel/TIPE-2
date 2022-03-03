@@ -1,0 +1,71 @@
+def impulsion(x,vx,u,vu,dt,durée,A0,w0,w1,etha,alpha,t1):
+    
+
+    X = [x] #Liste des positions
+    VX = [vx] #Liste des vitesses
+    U = [u] #Liste des positions
+    VU = [vu] #Liste des vitesses
+    T = [0]  #Liste des temps
+    #Em = [(1/2)*(m*v0**2 + k*(x0-l0)**2)]
+    t=0
+    
+    while t<=durée:
+        x = x + vx * dt
+        u = u + vu * dt
+        
+        if t < t1:
+            ax = 2*alpha*etha*w1*vu + w1**2*alpha*u-w0**2*x+A0
+        else:
+            ax = 2*alpha*etha*w1*vu + w1**2*alpha*u-w0**2*x
+        au = -ax - 2*etha*w1*vu-w1**2*u
+        
+        vx = vx + ax*dt
+        vu = vu + au*dt
+        
+        t+=dt
+        X.append(x)
+        VX.append(vx)
+        U.append(u)
+        VU.append(vu)
+        T.append(t)
+        #Em.append((1/2)*(m*v**2 + k*(x-l0)**2))
+    
+    plt.plot(T,X,'r')
+    plt.show()
+    
+impulsion(0,0,0,0,0.01,500,100,100,95,0.05,0.1,3)    
+    
+ def RessortSimpleImpulsion(x,vx,dt,durée,A,w0,w1,t1):
+    
+    plt.close()
+    X = [x] #Liste des positions
+    VX = [vx] #Liste des vitesses
+    T = [0]  #Liste des temps
+    t=0
+    
+    while t<=durée:
+        x = x + vx * dt
+        
+        if t < t1:
+            ax = - w0**2*x +A- w1*vx
+        else:
+            ax = - w0**2*x - w1*vx
+        
+        vx = vx + ax*dt
+        
+        t+=dt
+        X.append(x)
+        VX.append(vx)
+        T.append(t)
+    
+    plt.plot(T,X,'r')
+    fig = plt.figure()
+    #♣fig = plt.figure()
+    # fig = plt.figure()
+    # plt.plot(X,VX,'m')
+    print(T[-1])
+    print(X)
+    plt.show()
+    
+RessortSimpleImpulsion(0,0,0.01,500,100,100,1,3)
+    
