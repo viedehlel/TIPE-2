@@ -1,0 +1,31 @@
+def RessortSimple(x,vx,dt,durée,A,omega,m,k):
+    
+    plt.close()
+    X = [x] #Liste des positions
+    VX = [vx] #Liste des vitesses
+    T = [0]  #Liste des temps
+    Em = [(1/2)*(m*vx**2 + k*(x)**2)]
+    t=0
+    
+    while t<=durée:
+        x = x + vx * dt
+        
+        ax = (- k*x +A*ma.cos(omega*t))/m
+        
+        vx = vx + ax*dt
+        
+        t+=dt
+        X.append(x)
+        VX.append(vx)
+        T.append(t)
+        Em.append((1/2)*(m*vx**2 + k*(x)**2))
+    
+    plt.plot(T,X,'r')
+    fig = plt.figure()
+    #♣fig = plt.figure()
+    plt.plot(T,Em,'purple')
+    # fig = plt.figure()
+    # plt.plot(X,VX,'m')
+    print(T[-1])
+    print(X)
+    plt.show()
