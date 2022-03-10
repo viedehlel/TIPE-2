@@ -1,0 +1,30 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import random as r
+
+X=[]
+Theta = np.linspace(0,100,500)
+Xini = np.sin(Theta*r.random())+np.cos(Theta*r.random())+np.sin(Theta*r.random())+np.cos(Theta*r.random())
+
+
+def joliesCourbesDeValou(X,T):
+    Y =  []
+    Th = []
+    n = len(X)
+    
+    for k in range(1,n-1):
+        if X[k-1]<X[k] and X[k+1]<X[k]:
+            Y.append(X[k])
+            Th.append(T[k])
+        elif X[k-1]>X[k] and X[k+1]>X[k]:
+            Y.append(-X[k])
+            Th.append(T[k])
+    return(Y,Th)
+    
+plt.plot(Theta,Xini)
+
+(x,t) = joliesCourbesDeValou(Xini,Theta)
+
+plt.plot(t,x)
+
+plt.show()
